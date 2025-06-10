@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using System.Threading;
 
 namespace Sample {
     internal sealed class Program {
@@ -13,7 +14,12 @@ namespace Sample {
             new Thread(() => {
                 Console.CursorVisible = false;
                 while (true) {
-                    _ = Console.ReadKey(true);
+                    if (Console.KeyAvailable) {
+                        _ = Console.ReadKey(true);
+                    }
+                    else {
+                        Thread.Sleep(50);
+                    }
                 }
             }) { IsBackground = true }.Start();
         }
