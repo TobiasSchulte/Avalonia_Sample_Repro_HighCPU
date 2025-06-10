@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using System.Threading;
 
 namespace Sample {
     internal sealed class Program {
@@ -26,7 +27,12 @@ namespace Sample {
 
                 while (true) {
                     try {
-                        _ = Console.ReadKey(true);
+                        if (Console.KeyAvailable) {
+                            _ = Console.ReadKey(true);
+                        }
+                        else {
+                            Thread.Sleep(50);
+                        }
                     } catch (InvalidOperationException) {
                         // If there is no console available ReadKey will throw,
                         // so pause briefly to avoid a tight loop.
